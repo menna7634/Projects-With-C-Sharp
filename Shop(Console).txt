@@ -1,0 +1,139 @@
+using System;
+
+namespace Shop_Project
+{
+    enum gender
+    {
+        male, female
+    }
+    struct user
+    {
+        public static int customer = 0; 
+        public user()
+        {
+            customer++;
+        }
+        public string name = "";
+        public string gender = "";
+        public int cost = 0;
+
+    }
+    struct clothe
+    {
+        public int size;
+        public string color;
+    }
+
+
+
+    internal class Program
+    {
+
+
+        static void Main(string[] args)
+        {
+            int money = 0, price_tshirt = 180, price_dress = 240, price_trousers = 220, Quantity = 1;
+            char Answer = 'y';
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("\t\t\t\t****************************************************");
+                Console.WriteLine("\t\t\t\t*                                                  *");
+                Console.WriteLine("\t\t\t\t*              Welcome in Our Store                *");
+                Console.WriteLine("\t\t\t\t*                                                  *");
+                Console.WriteLine("\t\t\t\t****************************************************");
+
+                Console.WriteLine("\n\n");
+
+                Console.WriteLine("------------------------------------");
+                Console.WriteLine("|          Registration            |");
+                Console.WriteLine("------------------------------------");
+
+                Console.WriteLine("\n");
+
+                Console.Write("Please Enter your Position ( User , Admin ) : ");
+                string Position = Console.ReadLine();
+
+                if (Position.ToLower() == "user")
+                {
+                    user u = new user();
+                    Console.Write("Please Enter your Name : ");
+                    u.name = Console.ReadLine();
+
+                    Console.Write("Please Enter your Gender ( Male / Female ) : ");
+                    u.gender = Console.ReadLine();
+                    Console.WriteLine();
+                    do {
+                        Console.WriteLine();
+                        Console.WriteLine("*************************************");
+                        Console.WriteLine("          This is Our Menu          *");
+                        Console.WriteLine("*************************************");
+                        Console.WriteLine("                                    *");
+
+                        if (u.gender.ToLower() == "male")
+                        {
+ 
+                                Console.WriteLine(" 1.  T-Shirt ( 180 EGP )            *");
+                                Console.WriteLine(" 2.  Trousers ( 220 EGP )           *");
+                                Console.WriteLine("                                    *");
+                                Console.WriteLine("*************************************");
+                                Console.Write("\nSelect Your Choice : ");
+                                int choice = int.Parse(Console.ReadLine());
+                                Console.Write("Enter The Quantity : ");
+                                Quantity = int.Parse(Console.ReadLine());
+                                u.cost += Quantity * (choice == 1 ? price_tshirt : price_trousers);
+                                Console.WriteLine($"\nYou bought {Quantity} {(choice == 1 ? "T-Shirt" : "T-Trousers")} cost {u.cost} EGP before the discount\n");         
+                        }
+                        else if (u.gender.ToLower() == "female")
+                        {  
+                                Console.WriteLine(" 1.  Dresses ( 240 EGP )            *");
+                                Console.WriteLine(" 2.  T-Shirt ( 180 EGP )            *");
+                                Console.WriteLine("                                    *");
+                                Console.WriteLine("*************************************");
+                                Console.Write("\nSelect Your Choice : ");
+                                int choice = int.Parse(Console.ReadLine());
+                                Console.Write("Enter The Quantity : ");
+                                Quantity = int.Parse(Console.ReadLine());
+                                u.cost += Quantity * (choice == 1 ? price_dress : price_tshirt);
+                                Console.WriteLine($"\nyou bought {Quantity} {(choice == 1 ? "Dresses" : "T - Shirt")} cost {u.cost} before the discount\n");
+                        }
+                        Console.Write("Do you want to buy anything else (y / n) : ");
+                        Answer = char.Parse(Console.ReadLine());
+                    } while (Answer == 'y');
+                    money += u.cost;
+                    Console.WriteLine($"\nYour cost is {u.cost} EGP After 10% Discount {u.cost * 0.9} EGP\n");
+                }
+                else if (Position.ToLower() == "admin")
+                {
+                    int action;
+                    Console.WriteLine();
+                    do
+                    {
+                        Console.WriteLine("1. Show number of Customers In your system\n2. Show Cash Recivable ");
+                        Console.Write("\nSelect the Action number : ");
+
+                        action = int.Parse(Console.ReadLine());
+
+                        if (action == 1)
+                        {
+                            Console.WriteLine($"\nNumber of Customers Registered in Our System : {user.customer} ");
+                        }
+                        else if (action == 2)
+                        {
+                            Console.WriteLine($"\nTotal Cash Recivable : {money * 0.9} ");
+
+                        }
+
+                        Console.Write("\nDo you want to do any action else ? (y / n) : ");
+                        Answer = char.Parse(Console.ReadLine());
+                        Console.WriteLine();
+                    } while (Answer == 'y');
+                }
+                
+                Console.Write("Do you want to run the program again ? (y / n) : ");
+                Answer = char.Parse(Console.ReadLine());
+            } while (Answer == 'y');
+
+        }
+    }
+}
